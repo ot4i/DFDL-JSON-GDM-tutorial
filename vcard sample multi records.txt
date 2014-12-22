@@ -1,0 +1,22 @@
+BEGIN:VCARD
+VERSION:2.1
+N:Sweet;Flower;;;
+FN:Flower Sweet
+EMAIL;INTERNET;HOME:me@bbloggs.com
+TEL;HOME;CELL:+44 20 1234 5678;+44 20 1234 9999
+ADR;HOME:;;1 Trafalgar Square;London;;WC2N;United Kingdom
+URL;HOME:http://sweet.com
+X-SKYPE-USERNAME:Sweet.flower
+X-TWITTER;BLAH:http://twitter.com/sweetflower
+END:VCARD
+BEGIN:VCARD
+VERSION:2.1
+N:Flores;Pip;;;
+FN:Pip Flores
+EMAIL;INTERNET;HOME:me@sample.com
+TEL;HOME;CELL:+44 20 1234 5678
+ADR;HOME:;;1 Trafalgar Square;London;;WC2N;United Kingdom
+URL;HOME:http://bip.com
+X-SKYPE-USERNAME:pip.flores
+X-TWITTER;BLAH:http://twitter.com/pipflores
+END:VCARD
