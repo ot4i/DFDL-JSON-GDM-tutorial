@@ -26,6 +26,7 @@ This tutorial provides different files:
 - vcard Sample reject.txt
 
 /*******************************************************************************
+
 Copyright (c) 2014 IBM Corporation and other Contributors
 
 All rights reserved. This program and the accompanying materials
