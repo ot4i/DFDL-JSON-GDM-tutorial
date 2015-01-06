@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><mappingRoot xmlns="http://www.ibm.com/2008/ccl/Mapping" domainID="com.ibm.msl.mapping.xml" domainIDExtension="mb" mainMap="true" targetNamespace="default" version="8.0.5.0" xmlns:map="default">
+    <documentation>/*******************************************************************************&#13;
+* Copyright (c) 2014 IBM Corporation and other Contributors&#13;
+*&#13;
+* All rights reserved. This program and the accompanying materials&#13;
+* are made available under the terms of the Eclipse Public License v1.0&#13;
+* which accompanies this distribution, and is available at&#13;
+* http://www.eclipse.org/legal/epl-v10.html&#13;
+*&#13;
+* Contributors:&#13;
+* IBM - initial implementation&#13;
+*******************************************************************************/&#13;
+&#13;
+Sample message map for use with IBM Integration Bus&#13;
+(c) Copyright International Business Machines Corporation 2014, 2014&#13;
+Licensed Materials - Property of IBM&#13;
+&#13;
+IBMs statements regarding its plans, directions, and intent are subject to&#13;
+change or withdrawal without notice at IBM's sole discretion.   Information&#13;
+regarding potential future products is intended to outline our general product&#13;
+direction and it should not be relied on in making a purchasing decision. The&#13;
+information mentioned regarding potential future products is not a commitment,&#13;
+promise, or legal obligation to deliver any material, code or functionality. Information&#13;
+about potential future products may not be incorporated into any contract. The&#13;
+development, release, and timing of any future features or functionality described&#13;
+for our products remains at our sole discretion.</documentation>
+    <inlinedXMLSchema><![CDATA[<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">            
+            <xsd:element name="ClientDetails" nillable="true">            
+    <xsd:complexType>            
+      <xsd:sequence>            
+        <xsd:element name="Title" nillable="true" type="xsd:string"/>            
+        <xsd:element name="Name" nillable="true" type="xsd:string"/>            
+        <xsd:element name="LastName" nillable="true" type="xsd:string"/>            
+        <xsd:element name="email" nillable="true" type="xsd:string"/>            
+        <xsd:element maxOccurs="1" minOccurs="0" name="WorkAddress" nillable="true">            
+          <xsd:complexType>            
+            <xsd:sequence>            
+              <xsd:element name="Street" nillable="true" type="xsd:string"/>            
+              <xsd:element name="Region" nillable="true" type="xsd:string"/>            
+              <xsd:element name="PostalCode" nillable="true" type="xsd:string"/>            
+              <xsd:element name="Country" nillable="true" type="xsd:string"/>            
+            </xsd:sequence>            
+          </xsd:complexType>            
+        </xsd:element>            
+        <xsd:element name="HomeAddress" nillable="true">            
+          <xsd:complexType>            
+            <xsd:sequence>            
+              <xsd:element name="Street" nillable="true" type="xsd:string"/>            
+              <xsd:element name="City" nillable="true" type="xsd:string"/>            
+              <xsd:element name="PostalCode" nillable="true" type="xsd:string"/>            
+              <xsd:element name="Country" nillable="true" type="xsd:string"/>            
+            </xsd:sequence>            
+          </xsd:complexType>            
+        </xsd:element>            
+        <xsd:element maxOccurs="1" minOccurs="0" name="OtherAddress" nillable="true" type="xsd:boolean"/>            
+      </xsd:sequence>            
+    </xsd:complexType>            
+  </xsd:element>            
+    <xsd:element name="Operation" nillable="true" type="xsd:string"/>            
+</xsd:schema>]]></inlinedXMLSchema>
+    <input path="mbsharedlib://vCard_2.1_shared/vCard_2.1.xsd" var="var1"/>
+    <input inlinedXMLSchema="true" path="../schema_0.xsd" var="var"/>
+    <output path="jar:file://!com/ibm/etools/mft/map/xsds/predefined/JsonDomainMsg.xsd" var="var2"/>
+    <namespaces>
+        <namespace kind="supplement" prefix="in" uri="http://www.ibm.com/dfdl/vCard/2.1"/>
+        <namespace kind="supplement" prefix="out" uri="http://www.ibm.com/json/object"/>
+        <namespace kind="supplement" prefix="out2" uri="http://www.ibm.com/iib/msl/json"/>
+    </namespaces>
+    <generation engine="xquery"/>
+    <mappingDeclaration name="Transform_vCards_into_JSON_Mapping">
+        <input namespace="http://www.ibm.com/dfdl/vCard/2.1" path="$var1/mb:msg(vCard,assembly,DFDL,Properties)"/>
+        <output namespace="http://www.ibm.com/iib/msl/json" path="$var2/mb:msg(JSON,assembly,JSON,Properties)">
+            <cast castType="userDefined" path="JSON/Data/type('anyType')" qualifier="{http://www.ibm.com/iib/msl/json}JSONObject" ref="var2"/>
+            <cast castType="userDefined" path="JSON/spath('Data',2)/any" qualifier="Operation" ref="var"/>
+            <cast castType="userDefined" path="JSON/spath('Data',2)/any" qualifier="ClientDetails" ref="var"/>
+        </output>
+        <move>
+            <input path="Properties"/>
+            <output path="Properties"/>
+            <override>
+                <assign value="">
+                    <output path="Properties/MessageSet"/>
+                </assign>
+                <assign value="">
+                    <output path="Properties/MessageType"/>
+                </assign>
+                <assign value="">
+                    <output path="Properties/MessageFormat"/>
+                </assign>
+            </override>
+        </move>
+        <condition>
+            <if>
+                <input path="vCard" var="vCard"/>
+                <output path="JSON/spath('Data',2)/Operation" var="Operation"/>
+                <output path="JSON/spath('Data',2)/ClientDetails" var="ClientDetails"/>
+                <test lang="xpath">$vCard/Email/Value != ''</test>
+                <assign value="Accept">
+                    <output path="$Operation/."/>
+                </assign>
+                <move>
+                    <input path="$vCard/Name[1]/Family" var="Family"/>
+                    <output path="$ClientDetails/LastName"/>
+                </move>
+                <move>
+                    <input path="$vCard/Name[1]/Given" var="Given"/>
+                    <output path="$ClientDetails/Name"/>
+                </move>
+                <move>
+                    <input path="$vCard/Title[1]/Value[1]"/>
+                    <output path="$ClientDetails/Title"/>
+                </move>
+                <foreach>
+                    <input path="$vCard/DeliveryAddress" var="DeliveryAddress"/>
+                    <output path="$ClientDetails/HomeAddress"/>
+                    <filter lang="xpath">$DeliveryAddress/Parameter='HOME'</filter>
+                    <move>
+                        <input path="$DeliveryAddress/Street" var="Street"/>
+                        <output path="Street"/>
+                    </move>
+                    <move>
+                        <input path="$DeliveryAddress/Locality" var="Locality"/>
+                        <output path="City"/>
+                    </move>
+                    <move>
+                        <input path="$DeliveryAddress/PostalCode" var="PostalCode"/>
+                        <output path="PostalCode"/>
+                    </move>
+                    <move>
+                        <input path="$DeliveryAddress/CountryName" var="CountryName"/>
+                        <output path="Country"/>
+                    </move>
+                </foreach>
+                <move>
+                    <input path="$vCard/Email[1]/Value[1]"/>
+                    <output path="$ClientDetails/email"/>
+                </move>
+            </if>
+            <else>
+                <input path="vCard"/>
+                <output path="JSON/spath('Data',2)/Operation" var="Operation1"/>
+                <output path="JSON/spath('Data',2)/ClientDetails" var="ClientDetails1"/>
+                <assign value="REJECT">
+                    <output path="$Operation1/."/>
+                </assign>
+                <move>
+                    <input path="Name[1]/Family" var="Family1"/>
+                    <output path="$ClientDetails1/LastName"/>
+                </move>
+                <move>
+                    <input path="Name[1]/Given" var="Given1"/>
+                    <output path="$ClientDetails1/Name"/>
+                </move>
+                <foreach>
+                    <input path="DeliveryAddress" var="DeliveryAddress1"/>
+                    <output path="$ClientDetails1/HomeAddress"/>
+                    <filter lang="xpath">$DeliveryAddress1/Parameter='HOME'</filter>
+                    <move>
+                        <input path="$DeliveryAddress1/Street" var="Street1"/>
+                        <output path="Street"/>
+                    </move>
+                    <move>
+                        <input path="$DeliveryAddress1/Locality" var="Locality1"/>
+                        <output path="City"/>
+                    </move>
+                    <move>
+                        <input path="$DeliveryAddress1/PostalCode" var="PostalCode1"/>
+                        <output path="PostalCode"/>
+                    </move>
+                    <move>
+                        <input path="$DeliveryAddress1/CountryName" var="CountryName1"/>
+                        <output path="Country"/>
+                    </move>
+                </foreach>
+                <move>
+                    <input path="Title[1]/Value[1]" var="Value1"/>
+                    <output path="$ClientDetails1/Title"/>
+                </move>
+            </else>
+        </condition>
+    </mappingDeclaration>
+</mappingRoot>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmFileInput.msgnode="ComIbmFileInput.msgnode" xmlns:ComIbmFileOutput.msgnode="ComIbmFileOutput.msgnode" xmlns:ComIbmMSLMapping.msgnode="ComIbmMSLMapping.msgnode" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="Transform_vCards_into_JSON.msgflow" nsPrefix="Transform_vCards_into_JSON.msgflow">
+  <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1">
+    <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <translation xmi:type="utility:TranslatableString" key="Transform_vCards_into_JSON" bundleName="Transform_vCards_into_JSON" pluginId="HandlingVCards"/>
+    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/HandlingVCards/icons/full/obj16/Transform_vCards_into_JSON.gif"/>
+    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/HandlingVCards/icons/full/obj30/Transform_vCards_into_JSON.gif"/>
+    <longDescription xmi:type="utility:ConstantString" string="/*******************************************************************************&#xD;&#xA;* Copyright (c) 2014 IBM Corporation and other Contributors&#xD;&#xA;*&#xD;&#xA;* All rights reserved. This program and the accompanying materials&#xD;&#xA;* are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;* which accompanies this distribution, and is available at&#xD;&#xA;* http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;*&#xD;&#xA;* Contributors:&#xD;&#xA;* IBM - initial implementation&#xD;&#xA;*******************************************************************************/&#xD;&#xA;&#xD;&#xA;Sample program for use with IBM Integration Bus&#xD;&#xA;© Copyright International Business Machines Corporation 2014, 2014 &#xD;&#xA;Licensed Materials - Property of IBM&#xD;&#xA;&#xD;&#xA;IBM’s statements regarding its plans, directions, and intent are subject to change or withdrawal without notice at IBM’s sole discretion.   Information regarding potential future products is intended to outline our general product direction and it should not be relied on in making a purchasing decision. The information mentioned regarding potential future products is not a commitment, promise, or legal obligation to deliver any material, code or functionality. Information about potential future products may not be incorporated into any contract. The development, release, and timing of any future features or functionality described for our products remains at our sole discretion."/>
+    <composition>
+      <nodes xmi:type="ComIbmFileInput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="47,108" inputDirectory="c:\IIB\BusinessCards" filenamePattern="vcard*" messageDomainProperty="DFDL" messageSetProperty="{vCard_2.1_shared}" messageTypeProperty="{http://www.ibm.com/dfdl/vCard/2.1}:vCard" validateTiming="immediate" recordDetection="parsedRecordSequence">
+        <translation xmi:type="utility:ConstantString" string="File Input"/>
+      </nodes>
+      <nodes xmi:type="ComIbmMSLMapping.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="210,104" mappingExpression="msl://{default}#Transform_vCards_into_JSON_Mapping">
+        <translation xmi:type="utility:ConstantString" string="Transform DFDL to JSON"/>
+      </nodes>
+      <nodes xmi:type="ComIbmFileOutput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="469,112" outputDirectory="c:\IIB\Cards" outputFilename="Card*" writeMode="writeInPlace" outputMode="archiveAndReplaceWithTimestamp">
+        <translation xmi:type="utility:ConstantString" string="File Output"/>
+      </nodes>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_6" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+    </composition>
+    <propertyOrganizer/>
+    <stickyBoard/>
+  </eClassifiers>
+</ecore:EPackage>
