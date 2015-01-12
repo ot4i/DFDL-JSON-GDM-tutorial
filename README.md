@@ -1,5 +1,8 @@
 vCard-JSON-GDM-tutorial
 =======================
+
+[Follow the steps for this tutorial](http://ot4i.github.io/DFDL-JSON-GDM-tutorial/)
+
 This IBM Integration Bus V10 Open Beta technology tutorial demonstrates how you can transform data from one format 
 to another by using the Graphical Data Mapping editor. In this particular scenario, the Graphical Data Mapping editor 
 is used to transform messages between the DFDL modelling language and the JSON data format.
