@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<!--***********************************************************************
+<?xml version="1.0" encoding="UTF-8"?><!--***********************************************************************
 * DFDL vCard schema reproduced from IETF RFC 6350, vCard Format Specification 
 * (http://tools.ietf.org/html/rfc6350) 
 * 
@@ -33,11 +31,11 @@
 * - Most property values 
 * 
 *********************************************************************** -->
-<xsd:schema targetNamespace="http://www.ibm.com/dfdl/vCard/2.1" 
-            xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" 
-            xmlns:fmt="http://www.ibm.com/dfdl/vCard/2.1/Format" 
-            xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" 
-            xmlns:vcd="http://www.ibm.com/dfdl/vCard/2.1" 
+<xsd:schema targetNamespace="http://www.ibm.com/dfdl/vCard/2.1"
+            xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/"
+            xmlns:fmt="http://www.ibm.com/dfdl/vCard/2.1/Format"
+            xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions"
+            xmlns:vcd="http://www.ibm.com/dfdl/vCard/2.1"
             xmlns:fn="http://www.w3.org/2005/xpath-functions"
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	
@@ -220,7 +218,7 @@
   <xsd:complexType name="t_AgentDetails">
       <xsd:sequence>
         <xsd:group ref="vcd:g_Parameters"/>
-        <xsd:element dfdl:initiator="%WSP*;BEGIN%WSP*;:%WSP*;VCARD%CR;%LF;%WSP*;" dfdl:terminator="END%WSP*;:%WSP*;VCARD%WSP*;" name="vCard" type="vcd:t_Embedded_vCard"/>
+        <xsd:element dfdl:initiator="%WSP*;BEGIN%WSP*;:%WSP*;VCARD%NL;%WSP*;" dfdl:terminator="END%WSP*;:%WSP*;VCARD%WSP*;" name="vCard" type="vcd:t_Embedded_vCard"/>
       </xsd:sequence>
   </xsd:complexType>
 
@@ -259,7 +257,7 @@
     </xsd:complexType>
   </xsd:element>
    
-  <xsd:element dfdl:initiator="%WSP*;BEGIN%WSP*;:%WSP*;VCARD%CR;%LF;%WSP*;" dfdl:terminator="END%WSP*;:%WSP*;VCARD%WSP*;" ibmSchExtn:docRoot="true" name="vCard" type="vcd:t_vCard"/>
+  <xsd:element dfdl:initiator="%WSP*;BEGIN%WSP*;:%WSP*;VCARD%NL;%WSP*;" dfdl:terminator="END%WSP*;:%WSP*;VCARD%WSP*;" ibmSchExtn:docRoot="true" name="vCard" type="vcd:t_vCard"/>
 
     <xsd:annotation>
 		<xsd:appinfo source="http://www.ogf.org/dfdl/">

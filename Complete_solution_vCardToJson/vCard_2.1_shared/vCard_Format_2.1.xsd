@@ -113,7 +113,7 @@
 			<!-- Common DFDL property values for a vCard property -->
 	    	<dfdl:defineFormat name="vCardPropertyFormat">
     	    	<dfdl:format occursCountKind="parsed" 
-        				 	 terminator="%CR;%LF;%WSP*;">
+        				 	 terminator="%NL;%WSP*;">
         		</dfdl:format>
       		</dfdl:defineFormat>
 
